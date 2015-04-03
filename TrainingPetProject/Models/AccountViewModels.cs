@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TrainingPetProject.Models
+namespace TrainingPetProject.Web.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

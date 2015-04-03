@@ -5,13 +5,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DataAccessProject.Models;
+using TrainingPetProject.Web.DataAccess.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using TrainingPetProject.Models;
+using TrainingPetProject.Web.Models;
 
-namespace TrainingPetProject.Controllers
+namespace TrainingPetProject.Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessProject.Models
+namespace TrainingPetProject.Web.DataAccess.Models
 {
     public class KabanFemale
     {

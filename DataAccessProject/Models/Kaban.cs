@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAccessProject.Models
+namespace TrainingPetProject.Web.DataAccess.Models
 {
     public class Kaban
     {

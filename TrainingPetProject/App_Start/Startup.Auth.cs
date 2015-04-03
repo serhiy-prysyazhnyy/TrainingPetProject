@@ -3,7 +3,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 
-namespace TrainingPetProject
+namespace TrainingPetProject.Web
 {
     public partial class Startup
     {

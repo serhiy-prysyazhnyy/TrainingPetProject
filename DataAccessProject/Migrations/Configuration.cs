@@ -1,20 +1,20 @@
-namespace DataAccessProject.Migrations
+namespace TrainingPetProject.Web.DataAccess.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataAccessProject.Context.PetProjContex>
+    internal sealed class Configuration : DbMigrationsConfiguration<TrainingPetProject.Web.DataAccess.Context.PetProjContex>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
-            ContextKey = "DataAccessProject.Context.PetProjContex";
+            ContextKey = "TrainingPetProject.Web.DataAccess.Context.PetProjContex";
         }
 
-        protected override void Seed(DataAccessProject.Context.PetProjContex context)
+        protected override void Seed(TrainingPetProject.Web.DataAccess.Context.PetProjContex context)
         {
             //  This method will be called after migrating to the latest version.
 

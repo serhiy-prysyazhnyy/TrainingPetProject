@@ -249,9 +249,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessProject\DataAccessProject.csproj">
+    <ProjectReference Include="..\DataAccessProject\TrainingPetProject.DataAccess.csproj">
       <Project>{a75111f7-ccca-47a3-a4fd-44665ff8595c}</Project>
-      <Name>DataAccessProject</Name>
+      <Name>TrainingPetProject.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

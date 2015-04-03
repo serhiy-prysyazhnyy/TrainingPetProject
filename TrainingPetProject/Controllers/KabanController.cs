@@ -6,10 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DataAccessProject.Models;
-using DataAccessProject.Context;
+using TrainingPetProject.Web.DataAccess.Models;
+using TrainingPetProject.Web.DataAccess.Context;
 
-namespace TrainingPetProject.Controllers
+namespace TrainingPetProject.Web.Controllers
 {
     public class KabanController : Controller
     {

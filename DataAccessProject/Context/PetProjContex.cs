@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
-using DataAccessProject.Models;
+using TrainingPetProject.Web.DataAccess.Models;
 
-namespace DataAccessProject.Context
+namespace TrainingPetProject.Web.DataAccess.Context
 {
     public class PetProjContex: DbContext
     {

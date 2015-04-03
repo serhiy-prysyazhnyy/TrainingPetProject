@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingPetProject", "TrainingPetProject\TrainingPetProject.csproj", "{2D021673-3E50-4D67-A80B-7A007B82A43D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingPetProject.Web", "TrainingPetProject\TrainingPetProject.Web.csproj", "{2D021673-3E50-4D67-A80B-7A007B82A43D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingPetProject.Tests", "TrainingPetProject.Tests\TrainingPetProject.Tests.csproj", "{D695A073-BA14-4E0B-82F8-A9820EB53823}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessProject", "DataAccessProject\DataAccessProject.csproj", "{A75111F7-CCCA-47A3-A4FD-44665FF8595C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingPetProject.DataAccess", "DataAccessProject\TrainingPetProject.DataAccess.csproj", "{A75111F7-CCCA-47A3-A4FD-44665FF8595C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
