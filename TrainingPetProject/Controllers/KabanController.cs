@@ -2,8 +2,6 @@
 using System.Web.Mvc;
 using AutoMapper;
 using TrainingPetProject.DataAccess.Abstract;
-using TrainingPetProject.DataAccess.Concrete;
-using TrainingPetProject.DataAccess.Context;
 using TrainingPetProject.DataAccess.Models;
 using TrainingPetProject.Web.ViewModels;
 
@@ -60,12 +58,9 @@ namespace TrainingPetProject.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var kbn = new Kaban();
-                kbn.Name = viewModel.Name;
-                
+                var kbn = Mapper.Map<Kaban>(viewModel);
+
                 _unitOfWork.KabanRepository.AddItem(kbn);
-                var dbModel = _unitOfWork.KabanRepository.GetItemById(viewModel.Id);
-                Mapper.Map(dbModel, viewModel);
                 _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
@@ -103,7 +98,7 @@ namespace TrainingPetProject.Web.Controllers
             if (ModelState.IsValid)
             {
                 var dbModel = _unitOfWork.KabanRepository.GetItemById(viewModel.Id);
-                Mapper.Map(dbModel, viewModel);
+                Mapper.Map(viewModel, dbModel);
 
                 _unitOfWork.KabanRepository.UpdateItem(dbModel);
                 _unitOfWork.Save();
@@ -137,10 +132,7 @@ namespace TrainingPetProject.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var dbModel = _unitOfWork.KabanRepository.GetItemById(id);
-            var viewModel = Mapper.Map<Kaban, KabanViewModel>(dbModel);
-
-            _unitOfWork.KabanRepository.DeleteItem(viewModel.Id);
+            _unitOfWork.KabanRepository.DeleteItem(id);
             _unitOfWork.Save();
 
             return RedirectToAction("Index");
