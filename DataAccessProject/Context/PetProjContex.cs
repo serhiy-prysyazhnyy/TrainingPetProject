@@ -1,11 +1,12 @@
 ﻿using System.Data.Entity;
-using TrainingPetProject.Web.DataAccess.Models;
+using TrainingPetProject.DataAccessProject.Models;
+using TrainingPetProject.DataAccess.Models;
 
-namespace TrainingPetProject.Web.DataAccess.Context
+namespace TrainingPetProject.DataAccess.Context
 {
     public class PetProjContex: DbContext
     {
         public DbSet<Kaban> Kabans { get; set; }
-        public DbSet<KabanFemale> KabanFemales { get; set; } 
+        public DbSet<Locations> Locationses { get; set; } 
     }
 }

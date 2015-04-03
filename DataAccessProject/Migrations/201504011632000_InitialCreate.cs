@@ -1,4 +1,4 @@
-namespace TrainingPetProject.Web.DataAccess.Migrations
+namespace TrainingPetProject.Web.TrainingPetProject.DataAccess.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

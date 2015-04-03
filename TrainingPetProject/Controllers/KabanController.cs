@@ -1,24 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Net;
 using System.Web.Mvc;
-using TrainingPetProject.Web.DataAccess.Models;
-using TrainingPetProject.Web.DataAccess.Context;
+using AutoMapper;
+using TrainingPetProject.DataAccess.Abstract;
+using TrainingPetProject.DataAccess.Concrete;
+using TrainingPetProject.DataAccess.Context;
+using TrainingPetProject.DataAccess.Models;
+using TrainingPetProject.Web.ViewModels;
 
 namespace TrainingPetProject.Web.Controllers
 {
     public class KabanController : Controller
     {
-        private PetProjContex db = new PetProjContex();
+
+        private readonly IUnitOfWork _unitOfWork;
+
+        public KabanController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         // GET: /Kaban/
         public ActionResult Index()
         {
-            return View(db.Kabans.ToList());
+            return View(_unitOfWork.KabanRepository.GetItems());
         }
 
         // GET: /Kaban/Details/5
@@ -28,12 +32,17 @@ namespace TrainingPetProject.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Kaban kaban = db.Kabans.Find(id);
-            if (kaban == null)
+
+            var dbModel = _unitOfWork.KabanRepository.GetItemById(id);
+
+            if (dbModel == null)
             {
                 return HttpNotFound();
             }
-            return View(kaban);
+
+            KabanViewModel viewModel = Mapper.Map<Kaban, KabanViewModel>(dbModel);
+
+            return View(viewModel);
         }
 
         // GET: /Kaban/Create
@@ -47,16 +56,21 @@ namespace TrainingPetProject.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Name")] Kaban kaban)
+        public ActionResult Create([Bind(Include="Id,Name")] KabanViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Kabans.Add(kaban);
-                db.SaveChanges();
+                var kbn = new Kaban();
+                kbn.Name = viewModel.Name;
+                
+                _unitOfWork.KabanRepository.AddItem(kbn);
+                var dbModel = _unitOfWork.KabanRepository.GetItemById(viewModel.Id);
+                Mapper.Map(dbModel, viewModel);
+                _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(kaban);
+            return View(viewModel);
         }
 
         // GET: /Kaban/Edit/5
@@ -66,12 +80,17 @@ namespace TrainingPetProject.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Kaban kaban = db.Kabans.Find(id);
-            if (kaban == null)
+
+            var dbModel = _unitOfWork.KabanRepository.GetItemById(id);
+            
+            if (dbModel == null)
             {
                 return HttpNotFound();
             }
-            return View(kaban);
+
+            KabanViewModel viewModel = Mapper.Map<Kaban, KabanViewModel>(dbModel);
+
+            return View(viewModel);
         }
 
         // POST: /Kaban/Edit/5
@@ -79,15 +98,18 @@ namespace TrainingPetProject.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Name")] Kaban kaban)
+        public ActionResult Edit([Bind(Include="Id,Name")] KabanViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(kaban).State = EntityState.Modified;
-                db.SaveChanges();
+                var dbModel = _unitOfWork.KabanRepository.GetItemById(viewModel.Id);
+                Mapper.Map(dbModel, viewModel);
+
+                _unitOfWork.KabanRepository.UpdateItem(dbModel);
+                _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
-            return View(kaban);
+            return View(viewModel);
         }
 
         // GET: /Kaban/Delete/5
@@ -97,12 +119,17 @@ namespace TrainingPetProject.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Kaban kaban = db.Kabans.Find(id);
-            if (kaban == null)
+
+            var dbModel = _unitOfWork.KabanRepository.GetItemById(id);
+
+            if (dbModel == null)
             {
                 return HttpNotFound();
             }
-            return View(kaban);
+
+            var viewModel = Mapper.Map<Kaban, KabanViewModel>(dbModel);
+
+            return View(viewModel);
         }
 
         // POST: /Kaban/Delete/5
@@ -110,19 +137,14 @@ namespace TrainingPetProject.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Kaban kaban = db.Kabans.Find(id);
-            db.Kabans.Remove(kaban);
-            db.SaveChanges();
+            var dbModel = _unitOfWork.KabanRepository.GetItemById(id);
+            var viewModel = Mapper.Map<Kaban, KabanViewModel>(dbModel);
+
+            _unitOfWork.KabanRepository.DeleteItem(viewModel.Id);
+            _unitOfWork.Save();
+
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }
