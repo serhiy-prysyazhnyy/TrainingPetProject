@@ -1,5 +1,7 @@
-[Bb]in/
-[Oo]bj/
+Bin/
+bin/
+Obj/
+obj/
 *.suo
 *.user
 *.userosscache
@@ -7,3 +9,4 @@
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+packages/
