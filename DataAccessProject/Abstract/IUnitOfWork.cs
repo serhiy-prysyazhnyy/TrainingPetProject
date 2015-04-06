@@ -8,5 +8,6 @@ namespace TrainingPetProject.DataAccess.Abstract
     {
         void Save();
         IRepository<Kaban> KabanRepository { get; }
+        IRepository<Locations> LocationsRepository { get; }
     }
 }

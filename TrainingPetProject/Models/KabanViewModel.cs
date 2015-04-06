@@ -1,5 +1,5 @@
 ﻿
-namespace TrainingPetProject.Web.ViewModels
+namespace TrainingPetProject.Web.Models
 {
     public class KabanViewModel
     {

@@ -3,13 +3,12 @@ using System.Web.Mvc;
 using AutoMapper;
 using TrainingPetProject.DataAccess.Abstract;
 using TrainingPetProject.DataAccess.Models;
-using TrainingPetProject.Web.ViewModels;
+using TrainingPetProject.Web.Models;
 
 namespace TrainingPetProject.Web.Controllers
 {
     public class KabanController : Controller
     {
-
         private readonly IUnitOfWork _unitOfWork;
 
         public KabanController(IUnitOfWork unitOfWork)
@@ -58,9 +57,9 @@ namespace TrainingPetProject.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var kbn = Mapper.Map<Kaban>(viewModel);
+                var tempMap = Mapper.Map<Kaban>(viewModel);
 
-                _unitOfWork.KabanRepository.AddItem(kbn);
+                _unitOfWork.KabanRepository.AddItem(tempMap);
                 _unitOfWork.Save();
                 return RedirectToAction("Index");
             }

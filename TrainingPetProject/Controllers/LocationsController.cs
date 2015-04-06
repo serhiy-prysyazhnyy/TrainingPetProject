@@ -2,19 +2,27 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using TrainingPetProject.DataAccessProject.Models;
+using AutoMapper;
+using TrainingPetProject.DataAccess.Abstract;
 using TrainingPetProject.DataAccess.Context;
+using TrainingPetProject.DataAccess.Models;
+using TrainingPetProject.Web.Models;
 
-namespace TrainingPetProject.Controllers
+namespace TrainingPetProject.Web.Controllers
 {
     public class LocationsController : Controller
     {
-        private PetProjContex db = new PetProjContex();
+        private readonly IUnitOfWork _unitOfWork;
+
+        public LocationsController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         // GET: /Locations/
         public ActionResult Index()
         {
-            return View(db.Locationses.ToList());
+            return View(_unitOfWork.LocationsRepository.GetItems());
         }
 
         // GET: /Locations/Details/5
@@ -24,12 +32,17 @@ namespace TrainingPetProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locations locations = db.Locationses.Find(id);
-            if (locations == null)
+            
+            var dbModel = _unitOfWork.LocationsRepository.GetItemById(id);
+
+            if (dbModel == null)
             {
                 return HttpNotFound();
             }
-            return View(locations);
+
+            LocationsViewModel viewModel = Mapper.Map<Locations, LocationsViewModel>(dbModel);
+
+            return View(viewModel);
         }
 
         // GET: /Locations/Create
@@ -43,16 +56,18 @@ namespace TrainingPetProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Country,City,DisplayName")] Locations locations)
+        public ActionResult Create([Bind(Include="Id,Country,City,DisplayName")] LocationsViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Locationses.Add(locations);
-                db.SaveChanges();
+                var tempMap = Mapper.Map<Locations>(viewModel);
+
+                _unitOfWork.LocationsRepository.AddItem(tempMap);
+                _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(locations);
+            return View(viewModel);
         }
 
         // GET: /Locations/Edit/5
@@ -62,12 +77,17 @@ namespace TrainingPetProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locations locations = db.Locationses.Find(id);
-            if (locations == null)
+            
+            var dbModel = _unitOfWork.LocationsRepository.GetItemById(id);
+
+            if (dbModel == null)
             {
                 return HttpNotFound();
             }
-            return View(locations);
+
+            LocationsViewModel viewModel = Mapper.Map<Locations, LocationsViewModel>(dbModel);
+
+            return View(viewModel);
         }
 
         // POST: /Locations/Edit/5
@@ -75,15 +95,18 @@ namespace TrainingPetProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Country,City,DisplayName")] Locations locations)
+        public ActionResult Edit([Bind(Include="Id,Country,City,DisplayName")] LocationsViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(locations).State = EntityState.Modified;
-                db.SaveChanges();
+                var dbModel = _unitOfWork.LocationsRepository.GetItemById(viewModel.Id);
+                Mapper.Map(viewModel, dbModel);
+
+                _unitOfWork.LocationsRepository.UpdateItem(dbModel);
+                _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
-            return View(locations);
+            return View(viewModel);
         }
 
         // GET: /Locations/Delete/5
@@ -93,12 +116,17 @@ namespace TrainingPetProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locations locations = db.Locationses.Find(id);
-            if (locations == null)
+            
+            var dbModel = _unitOfWork.LocationsRepository.GetItemById(id);
+
+            if (dbModel == null)
             {
                 return HttpNotFound();
             }
-            return View(locations);
+
+            LocationsViewModel viewModel = Mapper.Map<Locations, LocationsViewModel>(dbModel);
+
+            return View(viewModel);
         }
 
         // POST: /Locations/Delete/5
@@ -106,19 +134,10 @@ namespace TrainingPetProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Locations locations = db.Locationses.Find(id);
-            db.Locationses.Remove(locations);
-            db.SaveChanges();
+            
+            _unitOfWork.LocationsRepository.DeleteItem(id);
+            _unitOfWork.Save();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

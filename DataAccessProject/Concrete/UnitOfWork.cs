@@ -9,14 +9,16 @@ namespace TrainingPetProject.DataAccess.Concrete
 {
     public class UnitOfWork: IUnitOfWork
     {
-        private PetProjContex _context;
+        private readonly PetProjContex _context;
 
         public IRepository<Kaban> KabanRepository { get; protected set; }
+        public IRepository<Locations> LocationsRepository { get; protected set; }
 
         public UnitOfWork(PetProjContex context)
         {
             _context = context;
             KabanRepository = new Repository<Kaban>(_context);
+            LocationsRepository = new Repository<Locations>(_context);
         }
         
         public void Save()
@@ -42,22 +44,5 @@ namespace TrainingPetProject.DataAccess.Concrete
                 throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
             }
         }
-
-        //public void Dispose()
-        //{
-        //    Dispose(true);
-        //    GC.SuppressFinalize(this);
-        //}
-
-        //protected virtual void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        if (context != null)
-        //        {
-        //            context.Dispose();
-        //        }
-        //    }
-        //}
     }
 }

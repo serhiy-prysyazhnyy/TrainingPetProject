@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TrainingPetProject.DataAccessProject.Models
+namespace TrainingPetProject.DataAccess.Models
 {
     public class Locations
     {

@@ -9,36 +9,36 @@ namespace TrainingPetProject.DataAccess.Concrete
 {
     public class Repository<T>: IRepository<T> where T : class
     {
-        private readonly PetProjContex contex;
+        private readonly PetProjContex _contex;
 
         public Repository(PetProjContex contex)
         {
-            this.contex = contex;
+            this._contex = contex;
         }
         
         public IEnumerable<T> GetItems()
         {
-            return contex.Set<T>().ToList();
+            return _contex.Set<T>().ToList();
         }
 
         public T GetItemById(int? id)
         {
-            return contex.Set<T>().Find(id);
+            return _contex.Set<T>().Find(id);
         }
 
         public void AddItem(T item)
         {
-            contex.Set<T>().Add(item);
+            _contex.Set<T>().Add(item);
         }
 
         public void DeleteItem(int? id)
         {
-            contex.Set<T>().Remove(GetItemById(id));
+            _contex.Set<T>().Remove(GetItemById(id));
         }
 
         public void UpdateItem(T item)
         {
-            contex.Entry(item).State = EntityState.Modified;
+            _contex.Entry(item).State = EntityState.Modified;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using TrainingPetProject.DataAccessProject.Models;
 using TrainingPetProject.DataAccess.Models;
 
 namespace TrainingPetProject.DataAccess.Context

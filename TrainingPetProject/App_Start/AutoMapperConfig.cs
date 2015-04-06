@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using TrainingPetProject.DataAccess.Models;
-using TrainingPetProject.Web.ViewModels;
+using TrainingPetProject.Web.Models;
 
 namespace TrainingPetProject.Web.App_Start
 {
@@ -9,6 +9,7 @@ namespace TrainingPetProject.Web.App_Start
         public static void Configure()
         {
             KabanMapping();
+            LocationsMapping();
 
             Mapper.AssertConfigurationIsValid();
         }
@@ -16,6 +17,12 @@ namespace TrainingPetProject.Web.App_Start
         private static void KabanMapping()
         {
             Mapper.CreateMap<Kaban, KabanViewModel>()
+                .ReverseMap();
+        }
+
+        private static void LocationsMapping()
+        {
+            Mapper.CreateMap<Locations, LocationsViewModel>()
                 .ReverseMap();
         }
     }
