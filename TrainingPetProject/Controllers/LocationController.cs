@@ -1,20 +1,19 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using AutoMapper;
 using TrainingPetProject.DataAccess.Abstract;
-using TrainingPetProject.DataAccess.Context;
 using TrainingPetProject.DataAccess.Models;
 using TrainingPetProject.Web.Models;
 
 namespace TrainingPetProject.Web.Controllers
 {
-    public class LocationsController : Controller
+    public class LocationController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public LocationsController(IUnitOfWork unitOfWork)
+        public LocationController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -22,7 +21,11 @@ namespace TrainingPetProject.Web.Controllers
         // GET: /Locations/
         public ActionResult Index()
         {
-            return View(_unitOfWork.LocationsRepository.GetItems());
+            var dbModels = _unitOfWork.LocationsRepository.GetItems();
+
+            List<LocationViewModel> viewModel = Mapper.Map<List<Location>, List<LocationViewModel> > (dbModels.ToList());
+
+            return View(viewModel);
         }
 
         // GET: /Locations/Details/5
@@ -40,7 +43,7 @@ namespace TrainingPetProject.Web.Controllers
                 return HttpNotFound();
             }
 
-            LocationsViewModel viewModel = Mapper.Map<Locations, LocationsViewModel>(dbModel);
+            LocationViewModel viewModel = Mapper.Map<Location, LocationViewModel>(dbModel);
 
             return View(viewModel);
         }
@@ -56,11 +59,11 @@ namespace TrainingPetProject.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Country,City,DisplayName")] LocationsViewModel viewModel)
+        public ActionResult Create([Bind(Include="Id,Country,City,DisplayName")] LocationViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var tempMap = Mapper.Map<Locations>(viewModel);
+                var tempMap = Mapper.Map<Location>(viewModel);
 
                 _unitOfWork.LocationsRepository.AddItem(tempMap);
                 _unitOfWork.Save();
@@ -85,7 +88,7 @@ namespace TrainingPetProject.Web.Controllers
                 return HttpNotFound();
             }
 
-            LocationsViewModel viewModel = Mapper.Map<Locations, LocationsViewModel>(dbModel);
+            LocationViewModel viewModel = Mapper.Map<Location, LocationViewModel>(dbModel);
 
             return View(viewModel);
         }
@@ -95,7 +98,7 @@ namespace TrainingPetProject.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Country,City,DisplayName")] LocationsViewModel viewModel)
+        public ActionResult Edit([Bind(Include="Id,Country,City,DisplayName")] LocationViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -107,37 +110,6 @@ namespace TrainingPetProject.Web.Controllers
                 return RedirectToAction("Index");
             }
             return View(viewModel);
-        }
-
-        // GET: /Locations/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            
-            var dbModel = _unitOfWork.LocationsRepository.GetItemById(id);
-
-            if (dbModel == null)
-            {
-                return HttpNotFound();
-            }
-
-            LocationsViewModel viewModel = Mapper.Map<Locations, LocationsViewModel>(dbModel);
-
-            return View(viewModel);
-        }
-
-        // POST: /Locations/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            
-            _unitOfWork.LocationsRepository.DeleteItem(id);
-            _unitOfWork.Save();
-            return RedirectToAction("Index");
-        }
+        }      
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using TrainingPetProject.DataAccess.Models;
+﻿using TrainingPetProject.DataAccess.Models;
 
 namespace TrainingPetProject.DataAccess.Abstract
 {
@@ -8,6 +6,7 @@ namespace TrainingPetProject.DataAccess.Abstract
     {
         void Save();
         IRepository<Kaban> KabanRepository { get; }
-        IRepository<Locations> LocationsRepository { get; }
+        IRepository<Location> LocationsRepository { get; }
+        IRepository<Hotel> HotelRepository { get; } 
     }
 }

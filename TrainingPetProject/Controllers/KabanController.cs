@@ -1,7 +1,11 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using AutoMapper;
 using TrainingPetProject.DataAccess.Abstract;
+using TrainingPetProject.DataAccess.Context;
 using TrainingPetProject.DataAccess.Models;
 using TrainingPetProject.Web.Models;
 
@@ -19,7 +23,11 @@ namespace TrainingPetProject.Web.Controllers
         // GET: /Kaban/
         public ActionResult Index()
         {
-            return View(_unitOfWork.KabanRepository.GetItems());
+            var dbModels = _unitOfWork.KabanRepository.GetItems();
+      
+            List<KabanViewModel> viewModel = Mapper.Map<List<Kaban>, List<KabanViewModel>>(dbModels.ToList());
+
+            return View(viewModel);
         }
 
         // GET: /Kaban/Details/5

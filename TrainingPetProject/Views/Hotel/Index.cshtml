@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TrainingPetProject.Web.Models.HotelViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationDisplayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stars)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HotelName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationDisplayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stars)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HotelName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", item.Id) |
+            @Html.ActionLink("Details", "Details", item.Id) 
+        </td>
+    </tr>
+}
+
+</table>

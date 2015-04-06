@@ -1,7 +1,7 @@
 ﻿
 namespace TrainingPetProject.Web.Models
 {
-    public class LocationsViewModel
+    public class LocationViewModel
     {
         public int Id { get; set; }
 

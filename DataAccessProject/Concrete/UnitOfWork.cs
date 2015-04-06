@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity.Validation;
+﻿using System.Data.Entity.Validation;
 using System.Linq;
 using TrainingPetProject.DataAccess.Abstract;
 using TrainingPetProject.DataAccess.Context;
@@ -12,13 +11,15 @@ namespace TrainingPetProject.DataAccess.Concrete
         private readonly PetProjContex _context;
 
         public IRepository<Kaban> KabanRepository { get; protected set; }
-        public IRepository<Locations> LocationsRepository { get; protected set; }
+        public IRepository<Location> LocationsRepository { get; protected set; }
+        public IRepository<Hotel> HotelRepository { get; protected set; } 
 
         public UnitOfWork(PetProjContex context)
         {
             _context = context;
             KabanRepository = new Repository<Kaban>(_context);
-            LocationsRepository = new Repository<Locations>(_context);
+            LocationsRepository = new Repository<Location>(_context);
+            HotelRepository = new Repository<Hotel>(context);
         }
         
         public void Save()

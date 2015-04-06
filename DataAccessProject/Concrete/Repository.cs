@@ -13,7 +13,7 @@ namespace TrainingPetProject.DataAccess.Concrete
 
         public Repository(PetProjContex contex)
         {
-            this._contex = contex;
+            _contex = contex;
         }
         
         public IEnumerable<T> GetItems()

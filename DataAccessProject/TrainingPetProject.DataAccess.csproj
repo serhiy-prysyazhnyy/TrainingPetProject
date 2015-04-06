@@ -62,8 +62,9 @@
       <DependentUpon>201504011632000_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\Kaban.cs" />
-    <Compile Include="Models\Locations.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
